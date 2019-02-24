@@ -13,5 +13,5 @@ if __name__ == "__main__":
 
     bag = rosbag.Bag(args.filename)
     for topic, msg, time in bag.read_messages():
-        print topic + '    ' + str(time.to_time())
+        print str(time.to_time()).ljust(18) + topic
     bag.close()
