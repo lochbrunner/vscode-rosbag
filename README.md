@@ -1,6 +1,9 @@
-# Rosbag Preview
+# Rosbag Preview for VS Code
 
 ![Screenshot](https://raw.githubusercontent.com/lochbrunner/vscode-rosbag/master/docs/screen.png)
+
+Lists the timestamps and the topics of the messages stored in the rosbag file.
+And the output of `rosbag info <filename>.`
 
 ## Prerequisites
 

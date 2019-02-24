@@ -1,6 +1,6 @@
 {
   "name": "vscode-rosbag",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "displayName": "Rosbag Preview",
   "description": "Preview of Rosbag for VSCode",
   "main": "./dist/extension",
@@ -40,10 +40,18 @@
       "command": "rosbag.preview",
       "title": "Show Rosbag content",
       "category": "rosbag"
+    }, {
+      "command": "rosbag.info",
+      "title": "Show Rosbag info",
+      "category": "rosbag"
     }],
     "menus": {
       "explorer/context": [{
         "command": "rosbag.preview",
+        "when": "resourceLangId == rosbag",
+        "group": "rosbag"
+      }, {
+        "command": "rosbag.info",
         "when": "resourceLangId == rosbag",
         "group": "rosbag"
       }]

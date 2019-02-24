@@ -1,14 +1,19 @@
 import * as vscode from 'vscode';
 
-import RosbagContentProvider from './rosbag-content-provider';
+import {RosbagContentProvider, RosbagInfoProvider} from './rosbag-content-provider';
 
 export function activate(context: vscode.ExtensionContext) {
   const ext_path =
       vscode.extensions.getExtension('lochbrunner.vscode-rosbag').extensionPath;
 
-  const provider = new RosbagContentProvider(ext_path);
-  const registration = vscode.workspace.registerTextDocumentContentProvider(
-      'rosbag-preview', provider);
+  const contentProvider = new RosbagContentProvider(ext_path);
+  const contentRegistration =
+      vscode.workspace.registerTextDocumentContentProvider(
+          'rosbag-preview', contentProvider);
+
+  const infoProvider = new RosbagInfoProvider();
+  const infoRegistration = vscode.workspace.registerTextDocumentContentProvider(
+      'rosbag-info', infoProvider);
 
   const openEvent = vscode.workspace.onDidOpenTextDocument(
       (document: vscode.TextDocument) => {
@@ -18,8 +23,13 @@ export function activate(context: vscode.ExtensionContext) {
   const previewCommand = vscode.commands.registerCommand(
       'rosbag.preview', (uri: vscode.Uri) => {showPreview(uri)});
 
+  const infoCommand = vscode.commands.registerCommand(
+      'rosbag.info', (uri: vscode.Uri) => {showInfo(uri)});
 
-  context.subscriptions.push(registration, previewCommand, openEvent);
+
+  context.subscriptions.push(
+      contentRegistration, infoRegistration, previewCommand, infoCommand,
+      openEvent);
 }
 
 function showPreview(uri: vscode.Uri): void {
@@ -32,9 +42,20 @@ function showPreview(uri: vscode.Uri): void {
       .then(null, vscode.window.showErrorMessage);
 }
 
+function showInfo(uri: vscode.Uri): void {
+  if (uri.scheme === 'rosbag-info') {
+    return;
+  }
+
+  vscode.commands
+      .executeCommand('vscode.open', uri.with({scheme: 'rosbag-info'}))
+      .then(null, vscode.window.showErrorMessage);
+}
+
 function showDocument(document: vscode.TextDocument): void {
   if (document.languageId === 'rosbag' &&
-      document.uri.scheme !== 'rosbag-preview') {
+      (document.uri.scheme !== 'rosbag-preview' &&
+       document.uri.scheme !== 'rosbag-info')) {
     vscode.commands.executeCommand('workbench.action.closeActiveEditor')
         .then(() => {
           showPreview(document.uri);
