@@ -3,12 +3,12 @@ import {TextDocumentContentProvider, Uri} from 'vscode';
 import {get_rosbag_info, load_content_rospy} from './load-rosbag';
 
 export class RosbagContentProvider implements TextDocumentContentProvider {
-  private ext_path: string;
-  constructor(ext_path: string) {
-    this.ext_path = ext_path;
+  private cmd: () => string;
+  constructor(cmd: () => string) {
+    this.cmd = cmd;
   }
   public async provideTextDocumentContent(uri: Uri): Promise<string|undefined> {
-    return await load_content_rospy(this.ext_path, uri.path);
+    return await load_content_rospy(this.cmd(), uri.path);
   }
 }
 

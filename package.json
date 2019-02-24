@@ -1,6 +1,6 @@
 {
   "name": "vscode-rosbag",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "displayName": "Rosbag Preview",
   "description": "Preview of Rosbag for VSCode",
   "main": "./dist/extension",
@@ -55,6 +55,17 @@
         "when": "resourceLangId == rosbag",
         "group": "rosbag"
       }]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Rosbag Preview configuration",
+      "properties": {
+        "rosbag.previewCmdPath": {
+          "type": ["string", "null"],
+          "default": null,
+          "description": "Path to an alternative command which provides preview information of the rosbag."
+        }
+      }
     }
   },
   "devDependencies": {

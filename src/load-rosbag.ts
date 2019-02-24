@@ -1,10 +1,10 @@
 import {spawn} from 'child_process';
 
 export async function load_content_rospy(
-    ext_path: string, filename: string): Promise<string> {
+    cmd: string, filename: string): Promise<string> {
   let store = '';
   return new Promise<string>((resolve, reject) => {
-    const process = spawn(`${ext_path}/tools/read.py`, [filename]);
+    const process = spawn(cmd, [filename]);
 
     process.stdout.on('data', data => {
       store += data.toString();
@@ -13,11 +13,10 @@ export async function load_content_rospy(
       if (code === 0)
         resolve(store);
       else
-        reject(`Loader ${
-                         ext_path
-                       }/tools/read.py on file ${
-                                                 filename
-                                               } exited with code ${code}`);
+        reject(
+            `Loader ${cmd}/tools/read.py on file ${
+                                                   filename
+                                                 } exited with code ${code}`);
     });
   });
 }

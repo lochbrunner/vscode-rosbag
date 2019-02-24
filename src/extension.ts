@@ -1,12 +1,16 @@
 import * as vscode from 'vscode';
 
+import RosbagConfiguration from './configuration';
 import {RosbagContentProvider, RosbagInfoProvider} from './rosbag-content-provider';
 
 export function activate(context: vscode.ExtensionContext) {
+  const config = new RosbagConfiguration();
   const ext_path =
       vscode.extensions.getExtension('lochbrunner.vscode-rosbag').extensionPath;
 
-  const contentProvider = new RosbagContentProvider(ext_path);
+  const previewCmd = () => config.previewCmdPath || `${ext_path}/tools/read.py`;
+
+  const contentProvider = new RosbagContentProvider(previewCmd);
   const contentRegistration =
       vscode.workspace.registerTextDocumentContentProvider(
           'rosbag-preview', contentProvider);
