@@ -1,0 +1,52 @@
+{
+  "name": "vscode-rosbag",
+  "version": "0.0.1",
+  "displayName": "Rosbag Preview",
+  "description": "Preview of Rosbag for VSCode",
+  "main": "./dist/extension",
+  "scripts": {
+    "compile": "tsc -p ./"
+  },
+  "keywords": [
+    "rosbag",
+    "vscode-extension"
+  ],
+  "author": "Matthias Lochbrunner",
+  "license": "MIT",
+  "activationEvents": [
+    "onLanguage:rosbag",
+    "onCommand:rosbag.preview"
+  ],
+  "engines": {
+    "vscode": "^1.25.0"
+  },
+  "contributes": {
+    "languages": [{
+      "id": "rosbag",
+      "extensions": [
+        ".bag"
+      ],
+      "aliases": [
+        "Rosbag"
+      ],
+      "configuration": "./language-configuration.json"
+    }],
+    "commands": [{
+      "command": "rosbag.preview",
+      "title": "Show Rosbag content",
+      "category": "rosbag"
+    }],
+    "menus": {
+      "explorer/context": [{
+        "command": "rosbag.preview",
+        "when": "resourceLangId == rosbag",
+        "group": "rosbag"
+      }]
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^11.9.5",
+    "typescript": "^3.3.3333",
+    "vscode": "^1.1.30"
+  }
+}
