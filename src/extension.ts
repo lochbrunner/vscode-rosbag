@@ -1,9 +1,12 @@
 import * as vscode from 'vscode';
+
 import RosbagContentProvider from './rosbag-content-provider';
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Activating Extension...');
-  const provider = new RosbagContentProvider();
+  const ext_path =
+      vscode.extensions.getExtension('lochbrunner.vscode-rosbag').extensionPath;
+
+  const provider = new RosbagContentProvider(ext_path);
   const registration = vscode.workspace.registerTextDocumentContentProvider(
       'rosbag-preview', provider);
 

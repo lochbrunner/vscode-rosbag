@@ -4,6 +4,11 @@
   "displayName": "Rosbag Preview",
   "description": "Preview of Rosbag for VSCode",
   "main": "./dist/extension",
+  "publisher": "lochbrunner",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lochbrunner/vscode-rosbag.git"
+  },
   "scripts": {
     "compile": "tsc -p ./"
   },
