@@ -1,6 +1,6 @@
 {
   "name": "vscode-rosbag",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "displayName": "Rosbag Preview",
   "description": "Preview of Rosbag for VSCode",
   "main": "./dist/extension",
